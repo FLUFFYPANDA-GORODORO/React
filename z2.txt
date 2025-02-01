@@ -1,0 +1,155 @@
+Props use hote hai humare components ko reusable karne ko , consider humare pass ek button hai or humne uss button ko alag alag jagah dalna hai app mein , to app button component banay or uska data hard coded karne ke jagah parent component se send krde or child component pe use krle
+
+
+import React from 'react'
+import Button from './components/Button'
+
+function App() {
+  return (
+    <div>
+      <Button text="Know more" color="bg-blue-400" />
+      <Button text="Download" color="bg-red-400 "/>
+    </div>
+  )
+}
+
+export default App
+
+
+import React from 'react'
+
+function Button({text,color}) {
+  return (
+    <div>
+      <button className={`px-3 py-2 ${color} text-zinc-100 text-xs rounded m-4`}>{text}</button>
+    </div>
+  )
+}
+
+export default Button
+
+
+This is how props workk.....................
+
+--------------------------------------------------------------------------
+
+import React from 'react'
+
+function Button({name,profession,image}) {
+
+    const HandleEvent = () =>{alert("Helloooooo")}
+
+  return (
+    <div className='w-52 bg-zinc-200 p-3'>
+      <div className='w-full h-60 bg-sky-200 '>
+        <img className='w-full h-full object-cover ' src={image} alt="" />
+      </div>
+      <div className='w-full p-3'>
+        <h3>{name}</h3>
+        <h5>{profession}</h5>
+        <button className='px-3 py-1 text-xs text-white bg-blue-500 font-semibold rounded-md' onClick={HandleEvent}>Add Friend</button>
+      </div>
+    </div>
+  )
+}
+
+export default Button
+
+
+import React from 'react'
+import Button from './components/Button'
+
+function App() {
+
+  const data = [
+    {name:"Gaurav",profession:"Developer",image:"https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"},
+    {name:"Sumedh",profession:"S/w Engg",image:"https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"},
+    {name:"Karan",profession:"Java Dev",image:"https://images.unsplash.com/photo-1514799595136-965d9d614956?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"},
+    {name:"Anandhu",profession:"Python Dev",image:"https://images.unsplash.com/photo-1513137621582-05b38724f2a3?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+  ]
+
+  return (
+    <div className='w-full h-screen bg-zinc-300 flex gap-4 items-center justify-center '>
+      {data.map((item,index)=>(
+        <Button image={item.image} name={item.name} profession={item.profession}/>
+      ))}
+    </div>
+  )
+}
+
+export default App
+
+------------------------------------------------------------------------------------------------------------
+
+Gand faad exercisee
+
+import React, { useState } from 'react'
+import Button from './components/Button'
+
+function App() {
+
+  const data = [
+    {name:"Gaurav",profession:"Developer",image:"https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ,friends:false},
+    {name:"Sumedh",profession:"S/w Engg",image:"https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",friends:false},
+    {name:"Karan",profession:"Java Dev",image:"https://images.unsplash.com/photo-1514799595136-965d9d614956?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",friends:false},
+    {name:"Anandhu",profession:"Python Dev",image:"https://images.unsplash.com/photo-1513137621582-05b38724f2a3?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",friends:false}
+  ]
+
+  const [realData,setRealData] = useState(data)
+  const HandleFriends = (cardIndex)=>{
+    setRealData((prev)=>{
+      return  prev.map((item,index)=>{
+        if(index === cardIndex){
+          return {...item,friends:!item.friends}
+        }
+        return item
+      })
+    })
+  } 
+  
+  // state jaha banti hai wahi pe update kiye ja sakti hai toh as humara button card mein hai to ayaha pe usko update karne se kuch fayda nai hoga . to iska solution ye hai ke hum yaha pe function create kre orr phir usse pass kr de  
+
+  return (
+    <div className='w-full h-screen bg-zinc-300 flex gap-4 items-center justify-center '>
+      {realData.map((item,index)=>(
+        <Button key={index} image={item.image} name={item.name} profession={item.profession} HandleFriends={HandleFriends} friends={item.friends} index={index}/>
+      ))}
+    </div>
+  )
+}
+
+export default App
+
+
+---------
+
+import React from 'react'
+
+function Button({name,profession,image,HandleFriends,friends,index}) {
+
+   
+
+  return (
+    <div className='w-52 bg-zinc-200 p-3'>
+      <div className='w-full h-60 bg-sky-200 '>
+        <img className='w-full h-full object-cover ' src={image} alt="" />
+      </div>
+      <div className='w-full p-3'>
+        <h3>{name}</h3>
+        <h5>{profession}</h5>
+        <button className={`px-3 py-1 text-xs text-white ${friends === true ? "bg-red-200" : "bg-blue-400" } font-semibold rounded-md`} onClick={()=>HandleFriends(index)}>{friends === true ? "Remove Friend" : "Add Friend"}</button>
+      </div>
+    </div>
+  )
+}
+
+export default Button
+
+
+// humara naya task ye he ke humara data app component mein hoga aur hum use props ke through pass karenge cards mein , har card paar ek add friend ka button hoga and humein uss add friend ke button par click hone par alert dena hai 
+
+
+
+{/* <button className={`px-3 py-2 ${color} text-zinc-100 text-xs rounded m-4`}>{text}</button> */}
+
+----------------------------------------------------------------------------------------------------------

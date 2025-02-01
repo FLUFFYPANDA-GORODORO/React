@@ -1,0 +1,201 @@
+State ek data hota hai , react iss data ka khayal rakta hai  , jab bhi ye data change hota hai react page ko update karta hai
+So basically page ko update krne ke liye humne state lagta hai .
+
+Ex:
+state koi bhi data ho sakta hai , jaise ke score = 0
+
+useState(1) abhi yaha pe humne state ko change kiya to react isse page pe update kr dega 
+
+Ex:
+maan lete hai humare game mein score 0 se start hota hai and in future wo score change hoga aya badhega jaise jaise hum game kelte jayenge waise . thoo uss case mein score ek variable state mein rakhna padega / rakhna jaruri hai , kyuki react sirf wo chez update krta hai jo state mein hoti hai
+
+---------------------------------------------------
+
+const ans = useState(12)
+
+use state humko do(2) chiz deta haii , ye ek array hota hai . ans is an array
+
+  ans[0] = value    
+  ans[1] = function{} (ye function value ko update krta hai) 
+
+  ans[0] = 12
+  ans[1] = function
+
+  -----------------------------------------------------
+
+  abhi isko hum destructuring karenge industry level code ..
+
+  const [fist,second] = useState(12)
+
+abhi first hamara value hai arr[0] . or second humara functoion hai jo first ko change karega arr[1]
+
+Isse destructuring khete hai 
+
+-------------------------------------------------------------------
+
+import React, { useState } from "react";
+// import Card from "./components/Card";
+// import Song from "./components/Song";
+
+function App(){
+
+  const [score,setScore] = useState(10)
+ 
+  
+  return(
+    <div>
+      <h1>{score}</h1>
+      <button className="px-2 py-2 text-xs bg-blue-400 rounded text-white" onClick={()=>setScore(200)}>Increase Score</button>
+    </div>
+    
+  )
+}
+
+export default App;
+
+This is how we update the value using function defined in second part of array .. setScore ke vagah se onclick pe hamari value change ho gayii
+
+----------------------------------------------------------------------------------
+function App(){
+
+  const [Ban,setBan] = useState(true)
+ 
+  
+  return(
+    <div>
+      <h1>{Ban.toString()}</h1>
+      <button className="px-2 py-2 text-xs bg-blue-400 rounded text-white" onClick={()=>setBan(false)}>Increase Score</button>
+    </div>
+    
+  )
+}
+
+Another examplee of useState 
+------------------------------------------------------------
+
+<h1>{Ban.toString()}</h1>
+<button className="px-2 py-2 text-xs bg-blue-400 rounded text-white" onClick={()=>setBan(!Ban)}>Increase Score</button>
+
+abhi ye dekho jab humne pehele code ko execute kiya to sirf true ka false ho raha tha uske baad kuch nai huaa.
+to ye chota sa update krne se humm true ka false or false ka true kr sakte haii. SO , basically humne jo current value hai uska ulta set krne ke liye kehh diya hai. 
+
+-------------------------------------------------------------
+
+setVal ke andar humne ek orr fat arrow function de diya jo ek parameter accept kr raha jo ek hamre val ke current value hai . Jaise jaise humara val change hoga waise prev change hoga or prev ke help se humm new value ko bhi update kr sakte hai
+
+<h1>{val}</h1>
+<button className='px-2 py-2 bg-blue-400 rounded-full' onClick={()=>setVal((prev)=>prev+1)}>Change karo</button>
+
+using previous value to change the current value 
+--------------------------------------------------------------------------
+
+<h1>Name : {value.name}</h1>
+<h1>Name : {value.banned.toString()}</h1>
+<button className='px-2 py-2 rounded-full bg-blue-400 text-white' onClick={()=>setValue(!value.banned)}>Change</button>
+
+abhi ye jo humne kiya ye humm nai kr sakte dikne mein ye correct lag raha hai pr ye wrong hai or error show karega .. agar humko isee change karna to hume isse ek object dena padega
+
+--------------------------------------------------------------------------
+
+<h1>Name : {value.name}</h1>
+<h1>Name : {value.banned.toString()}</h1>
+<button className='px-2 py-2 rounded-full bg-blue-400 text-white' onClick={()=>setValue({...value , banned:!value.banned ,name:"Sumedh"})}>Change</button>
+
+This is the correct way to change the valuee.Spread operator use karna hai orr phir uske baad comma de ke hum uski value change kr sakte hai
+
+------------------------------------------------------------------------
+
+<div>
+      <h1>Name : {value.name}</h1>
+      <h1>Name : {value.banned.toString()}</h1>
+      <button className={`px-2 py-2 rounded-full ${value.banned ? "bg-blue-400" : "bg-red-400"} text-white`} onClick={()=>setValue({...value , banned:!value.banned})}>Change</button>
+</div>
+
+Abhi color bhi change hogaa crazy stuff 
+
+--------------------------------------------------------------------------
+
+useState state ko turant update nahi karta , wo useState state ko update karta hai apne hisab se function completion ke baad to fix performance issues 
+
+-----------------------------------------------------------------------------
+
+
+  const [val,setVal] = useState([1,2,3,4,5,6])
+  return (
+    <div className='m-5'>
+      {val.map(item=><h1>{item}</h1>)}
+      <button className='px-2 py-2 rounded-md bg-blue-400' onClick={()=>setVal(()=>{
+        return val.filter((item,index)=>index!=val.length-1)
+      })}>Delete</button>
+    </div>
+  )
+
+  so chalo isse samajte haii humko array mein se element ko pop karna jo ke humm directly nai kr sakte .. 
+  Tho humne use kiya filter method jo humko ek naya array baneke dega orr setVal uss naye array ko set kr dega as simple as that
+  to filter mein humne kya kiya wo samjte hai , humne pehele index check kiya array ka , agar array ka index val.lenght-1 se match nai ho raha hai to humm usee add kr denge . agar match ho gaya to hum usse add nai karenge
+
+  0 = 6-1
+  0 = 5
+
+  1 = 6-1
+  1 = 5
+
+Same goes for 2,3,4
+
+  5 = 6-1
+  5 = 5
+
+  Ayha pe match ho gaya to hum isee add nai karenge
+
+--------------------------------------------------------
+
+<div className='m-5'>
+      {val.map(elem => <h1>{elem}</h1>)}
+      <button className='px-2 py-2 rounded-md bg-blue-400' onClick={()=>setVal(()=>val.filter((elem,index)=>index!=2) )
+      }>Delete</button>
+    </div>
+  
+Ek orr example jaha pe humne ek element ko delete kiya jiske humne jarurat nai thi
+
+----------------------------------------
+
+ <div className='m-5'>
+      {val.map(elem => <h1>{elem}</h1>)}
+      <button className='px-2 py-2 rounded-md bg-blue-400' onClick={()=>setVal(()=>val.filter(elem =>elem%2!==0) )
+      }>Delete</button>
+    </div>
+
+Another example where we delete the numbers divisible by 2
+-------------------------------------------------------------------
+
+Addition in array
+
+<div className='m-5'>
+      {val.map(item=><h1>{item}</h1>)}
+      <button className='px-2 py-2 rounded-md bg-blue-400' onClick={()=>setVal([...val,7])}>Delete</button>
+    </div>
+
+-----------------------------------------------------------------------------
+
+ <div className='m-5'>
+      {val.map((elem)=>(
+        <div>
+          <h1>{elem.name}</h1>
+          <h2>{elem.age}</h2>
+        </div>
+      ))}
+      <button className='px-2 py-2 rounded-md bg-blue-400' onClick={()=>setVal(()=>val.map(elem => elem.name === "Sumedh" ? ({name:"Sumedh",age:20}): elem ))} >Click</button>
+    </div>
+
+  Addition into objects
+
+----------------------------------------------------
+
+npm install @react-icons/all-files --save
+
+react icons installations
+
+--------------------------------------------
+
+
+

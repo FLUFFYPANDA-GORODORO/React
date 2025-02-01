@@ -1,0 +1,184 @@
+Routing
+
+npm i react-router-dom
+
+main.jsx
+
+import { BrowserRouter } from 'react-router-dom'
+
+<BrowserRouter>
+    <App />
+</BrowserRouter>
+
+--------------------------------------------------------------
+
+
+import React from 'react'
+import { Link,Routes,Route } from "react-router-dom";
+
+import Nav from "./components/Nav"
+import Routess from "./components/Routess"
+function App() {
+  return (
+    <>
+     
+      <Nav />
+      <Routess />
+
+    </>
+
+
+  )
+}
+
+export default App
+
+------------
+
+import React from 'react'
+
+function About() {
+  return (
+    <div className='bg-zinc-100 w-1/2 m-auto mt-10 p-5' >
+    <h1 className='text-5xl font-semibold'>About</h1>
+    <p className='text-xs mt-4'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic incidunt debitis cum architecto similique, eveniet assumenda eligendi repudiandae nobis officiis temporibus tenetur esse molestiae earum facilis atque vel facere maiores!</p>
+  </div>
+  )
+}
+
+export default About
+
+
+-------------
+
+import React from 'react'
+import { Link,Outlet } from "react-router-dom";
+
+
+function User() {
+  return (
+    <div>
+    <div className='bg-zinc-100 w-1/2 m-auto mt-10 p-5' >
+    <h1 className='text-5xl font-semibold'>User</h1>
+    <p className='text-xs mt-4'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic incidunt debitis cum architecto similique, eveniet assumenda eligendi repudiandae nobis officiis temporibus tenetur esse molestiae earum facilis atque vel facere maiores!</p>
+
+    <div className='flex w-1/2 flex-col mt-3'>
+      <Link className='p-3 bg-red-200 text-2xl m-2' to="/user/John">John</Link>
+      <Link className='p-3 bg-red-200 text-2xl m-2' to="/user/Gaurav">Gaurav</Link>
+      <Link className='p-3 bg-red-200 text-2xl m-2' to="/user/Sumedh">Sumedh</Link>
+    </div>
+    </div>
+
+    <hr />
+      <Outlet />    
+
+
+  
+  </div>
+
+  
+  )
+}
+
+export default User
+
+----------------
+
+import React from 'react'
+
+
+function Home() {
+  return (
+    <div className='bg-zinc-100 w-1/2 m-auto mt-10 p-5' >
+      <h1 className='text-5xl font-semibold text-center'>Homee</h1>
+      <p className='text-xs mt-4'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic incidunt debitis cum architecto similique, eveniet assumenda eligendi repudiandae nobis officiis temporibus tenetur esse molestiae earum facilis atque vel facere maiores!</p>
+      <div className='flex justify-center items-center'>
+      <button className='px-2 py-2 rounded bg-blue-400 m-4 '>Explore More</button>
+      </div>
+    </div>
+  )
+}
+
+export default Home
+
+--------------
+
+
+import React from 'react'
+import { NavLink,Link } from "react-router-dom";
+
+function Nav() {
+  return (
+    <div>
+       <nav className='mt-10 flex justify-center gap-10'>
+        <NavLink style={(e)=>{
+            return{
+                color: e.isActive ? "tomato" : "",
+                fontWeight: e.isActive ? "bold" : ""
+            }
+        }} to="/home">Home</NavLink>
+        <NavLink style={(e)=>{
+            return{
+                color: e.isActive ? "tomato" : "",
+                fontWeight: e.isActive ? "bold" : ""
+            }
+        }} to="/user">User</NavLink>
+        <NavLink style={(e)=>{
+            return{
+                color: e.isActive ? "tomato" : "",
+                fontWeight: e.isActive ? "bold" : ""
+            }
+        }}to="/about">About</NavLink>
+      </nav>
+    </div>
+  )
+}
+-----------------------
+
+export default Nav
+
+
+
+
+
+// <nav className='mt-10 flex justify-center gap-10'>
+// <NavLink style={(e)=>{
+//     console.log(e)
+// }} to="/home">Home</NavLink>
+// <NavLink to="/user">User</NavLink>
+// <NavLink to="/about">About</NavLink>
+// </nav>
+
+// This function gives is two values isactive & ispending
+// With the help of isactive we can know that the current link is active and we can perform functions , styling and other things on it
+
+
+----------------------
+
+import React from 'react'
+
+import { Link,Routes,Route } from "react-router-dom";
+import Home from "./Home"
+import User from "./User"
+import About from "./About"
+import Userdetail from './Userdetail';
+
+function Routess() {
+  return (
+    <div>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/user" element={<User />} >
+            <Route path="/user/:name" element={<Userdetail />} />
+        </Route>
+        
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </div>
+  )
+}
+
+export default Routess
+
+
+-----------------

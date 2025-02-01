@@ -1,0 +1,201 @@
+jsx -> jsx is actually a similar looking structure like HTML but with additional properties
+       jsx sirf dikta hai HTML ke tarah hota nai
+
+EX:
+<h1>hey 2+2</h1>
+<h1>hey {2+2}</h1>
+
+HTML output : hey 2+2
+JSX  output : hey 4
+
+------------------------------------------------------------------------
+
+rfce - shortcut
+
+---------------------------------------------------------------
+import React from "react";
+import Navbar from "./components/Navbar";
+
+function App(){
+  return(
+    <Navbar />
+    <h1>Heyyy</h1>
+  )
+}
+
+export default App;
+
+abhi ye error show karega kyuki hum do chiz khabi bhi return nai jr sakte
+so solution to this is that we create a div orr usme hum ye saab daal default
+
+import React from "react";
+import Navbar from "./components/Navbar";
+
+function App(){
+  return(
+    <div>
+    <Navbar />
+    <h1>Heyyy</h1>
+    </div>
+  )
+}
+
+export default App;
+
+Now this will workkk
+
+-----------------------------------------------------------------
+
+How we reuse the code in react we simply create one array with some values and then we access it in our code
+Anything we want to display on the screen is stored into the array then we map it.
+Map has two parameters one is index and second one is the data that we have written in the array .so with help of this second parameters we are able to access the data.
+We use fat arrow function which makes writting work easy
+
+import React from "react";
+import Card from "./components/Card";
+
+function App(){
+
+  const data = ["Gaurav","Sumedh","Karan","Anandhu"] 
+
+  return(
+    <div>
+      {data.map((elem,index)=>(
+        <div key={index} className="px-3 py-4 bg-zinc-300 rounded-md w-fit">
+          {elem}
+        </div>
+      ))}
+    </div>
+    
+  )
+}
+
+export default App;
+
+-------------------------------------------------------------------
+
+Card basic structure
+
+  return (
+    <div className='w-full h-screen bg-zinc-200 flex items-center justify-center gap-10'>
+      <div className='width-52 bg-zinc-100 rounded-md overflow-hidden'>
+        <div className='w-full h-32 bg-zinc-300'>
+          <img className='w-full h-full object-cover object-top' src="https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+        </div>
+        <div className='w-52 px-3 py-4'>
+            <h2 className='font-semibold'>Amazon Basics</h2>
+            <p className='text-xs mt-5'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio aperiam asperiore</p>
+        </div>
+      </div>
+    </div>
+  )
+--------------------------------------------------------------------------------------------
+
+Reusable cards
+
+import React from 'react'
+
+function Card() {
+
+  const data = [
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Amazon Basics", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore"},
+    
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Apple", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore"},
+
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Helloo Bhaiii", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore"}
+
+  ]
+
+  return (
+    <div className='w-full h-screen bg-zinc-200 flex items-center justify-center gap-10'>
+       {data.map((elem,index) => (
+        <div key={index} className='width-52 bg-zinc-100 rounded-md overflow-hidden'>
+        <div className='w-full h-32 bg-zinc-300'>
+          <img className='w-full h-full object-cover object-top' src={elem.image} alt="" />
+        </div>
+        <div className='w-52 px-3 py-4'>
+            <h2 className='font-semibold'>{elem.name}</h2>
+            <p className='text-xs mt-5'>{elem.description}</p>
+        </div>
+      </div>
+       ))}
+    </div>
+  )
+}
+
+export default Card
+
+Dekho humne ek array banaya usme humne ek object banaya or phir humne usme three diff values rakh de or kay phir hume simply unko display kr diya with the help of mapping and array function
+
+--------------------------------------------------------------------
+
+Conditional rendering ->  Abhi suppose karo humko koi chezz bechi hai or usko hum site pe daal diyaa abhi waha in IN stock likh ke aa raha hai but jab wo stock mein nai rahega to humko uss product ko out of stock bhi karna hai . So ye karne ke liye humne lagti hai conditional rendering
+
+import React from 'react'
+
+function Card() {
+
+  const data = [
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Amazon Basics", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore",instock:true},
+    
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Apple", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore",instock:false},
+
+    {image:"https://images.unsplash.com/photo-1522780550166-284a0288c8df?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , name:"Helloo Bhaiii", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio aperiam asperiore",instock:true}
+
+  ]
+
+  return (
+    <div className='w-full h-screen bg-zinc-200 flex items-center justify-center gap-10'>
+       {data.map((elem,index) => (
+        <div key={index} className='width-52 bg-zinc-100 rounded-md overflow-hidden'>
+        <div className='w-full h-32 bg-zinc-300'>
+          <img className='w-full h-full object-cover object-top' src={elem.image} alt="" />
+        </div>
+        <div className='w-52 px-3 py-4'>
+            <h2 className='font-semibold'>{elem.name}</h2>
+            <p className='text-xs mt-5'>{elem.description}</p>
+            <button className={`px-4 py-2 ${elem.instock ? 'bg-blue-400' : 'bg-red-400'} text-xs rounded-md mt-3 ml-8`}>{elem.instock ? "In Stock" : "Out of Stock"}</button>
+            {/* YE dekoho yaha pe humne use kiya ternanry operator use kiya . one of the coolest thing . Agar true hoga to In stock print karega nai to false hoga to out of stock print karega */}
+        </div>
+      </div>
+       ))}
+    </div>
+  )
+}
+
+export default Card
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Event handling 
+
+import React from 'react'
+
+function Song() {
+
+    const data =[
+        { name: "Maahi vee" , description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero rem recusandae molestiae."},
+        { name: "Dope Shope" , description:"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero rem recusandae molestiae."}
+
+    ]
+
+    const HandleEvent = () =>{alert("Helloooooo")}
+
+  return (
+    <div className='w-full h-screen bg-zinc-300 flex flex-col justify-center  items-center gap-10'>
+       {data.map((elem,index)=>(
+         <div key={index} className='w-60 px-3 py-2  bg-zinc-100 rounded'>
+         <h3 className='flex  font-semibold text-xl '>{elem.name}</h3>
+         <p className='text-xs mt-2'>{elem.description}</p>
+         <button onClick={HandleEvent} className='px-4 py-2 bg-blue-400 text-xs font-semibold text-zinc-100 rounded-md mt-3 ml-16'>Download</button>
+     </div>
+       ))}
+    </div>
+  )
+}
+
+export default Song
+
+the button on which we need to perform any action we write it there only
+Now we should not do this HandleEvent() --- if we does the function will start executing before onclick so never do this mistake
+Correct way --- HandleEvent

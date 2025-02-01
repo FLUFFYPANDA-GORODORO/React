@@ -1,0 +1,39 @@
+npm create vite@latest
+
+->React
+->js
+
+->npm install
+-------------------------
+
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init -p
+
+--Terminal
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+--tailwind.config.js
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+--index.css
+
+-------------------------------------
+
+npm i react-router-dom
+
+-------------------------------
